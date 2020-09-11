@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TestAPIrequest</string>
+    <string name="et_hint">Enter City Name</string>
+    <string name="search">Search</string>
+    <string name="URL_show_line">your URL will be there</string>
+    <string name="URL_request_result">your JSON result will be there</string>
+</resources>
