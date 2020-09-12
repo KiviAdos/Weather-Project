@@ -29,6 +29,7 @@ public class NetworkUtils {
         }
         return finalURL;
     }
+//    Open connection for read from URL
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
