@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar search_pb;
     public class tryAsync extends AsyncTask<URL, Void, String>
     {
-
         @Override
         protected void onPreExecute() {
             search_pb = findViewById(R.id.pb_network);
@@ -65,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        search_pb = (ProgressBar) findViewById(R.id.pb_network);
     }
 
     @Override

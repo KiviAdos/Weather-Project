@@ -4,4 +4,7 @@
     <string name="search">Search</string>
     <string name="URL_show_line">your URL will be there</string>
     <string name="URL_request_result">your JSON result will be there</string>
+    <string name="weather_desc">Sunny</string>
+    <string name="temperature">60°C</string>
+    <string name="date">15.08</string>
 </resources>

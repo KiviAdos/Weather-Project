@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorAccent"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/weather_icon_iv"
+        android:layout_width="@dimen/listItemWidthHeight"
+        android:layout_height="@dimen/listItemWidthHeight"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+        app:layout_constraintStart_toEndOf="@id/weather_icon_iv"
+        android:id="@+id/weather_desc_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/listItemWidthHeight"
+        android:text="@string/weather_desc"
+        android:textSize="@dimen/weatherDescTextSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="top"
+        android:layout_marginStart="@dimen/mainPadding"/>
+    <TextView
+        android:id="@+id/temperature_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/listItemWidthHeight"
+        android:textSize="@dimen/tempTextSize"
+        app:layout_constraintStart_toEndOf="@id/weather_desc_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/temperature"
+        android:gravity="top"
+        android:layout_marginStart="@dimen/mainPadding"/>
+    <TextView
+        android:id="@+id/list_item_data_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/listItemWidthHeight"
+        android:textSize="@dimen/dataTextSize"
+        app:layout_constraintStart_toEndOf="@id/temperature_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/date"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/mainPadding"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
