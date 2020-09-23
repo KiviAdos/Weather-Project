@@ -1,9 +1,8 @@
-package com.example.testapirequest;
+package com.example.weather_project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,14 +12,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.testapirequest.utils.NetworkUtils;
+import com.example.weather_project.utils.NetworkUtils;
 
 import java.io.IOException;
 import java.net.URL;
 
-import static com.example.testapirequest.utils.NetworkUtils.generateURL;
+import static com.example.weather_project.utils.NetworkUtils.generateURL;
 
 public class MainActivity extends AppCompatActivity {
     private TextView URL_show_tv;
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     {
         @Override
         protected void onPreExecute() {
-            search_pb = findViewById(R.id.pb_network);
+            super.onPreExecute();
             search_pb.setVisibility(View.VISIBLE);
         }
 
@@ -39,13 +37,11 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(URL... urls) {
             URL searchUrl = urls[0];
             String openWeatherres = null;
-            search_pb.setVisibility(View.VISIBLE);
             try {
                 openWeatherres = NetworkUtils.getResponseFromHttpUrl(searchUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            search_pb.setVisibility(View.INVISIBLE);
             return openWeatherres;
         }
 

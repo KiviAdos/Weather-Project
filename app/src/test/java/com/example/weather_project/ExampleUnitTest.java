@@ -1,4 +1,4 @@
-package com.example.testapirequest;
+package com.example.weather_project;
 
 import org.junit.Test;
 

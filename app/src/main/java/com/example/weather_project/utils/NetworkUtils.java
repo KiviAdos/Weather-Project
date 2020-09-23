@@ -1,4 +1,4 @@
-package com.example.testapirequest.utils;
+package com.example.weather_project.utils;
 
 import android.net.Uri;
 
