@@ -7,4 +7,13 @@
     <string name="weather_desc">Desc</string>
     <string name="temperature">Temp</string>
     <string name="date">Date</string>
+    <string name="min_temp">Min temp:</string>
+    <string name="max_temp">Max temp:</string>
+    <string name="feels_like">Feels like:</string>
+    <string name="pressure">Pressure:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="sunrise">Sunrise:</string>
+    <string name="sunset">Sunset:</string>
+    <string name="wind_speed">Wind speed:</string>
+    <string name="main_temperature_icon">Main temperature icon</string>
 </resources>

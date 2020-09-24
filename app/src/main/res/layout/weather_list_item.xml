@@ -5,9 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorAccent"
     android:padding="16dp"
-    android:layout_marginStart="@dimen/constarintLayoutMargin"
-    android:layout_marginEnd="@dimen/constarintLayoutMargin"
-    android:layout_marginTop="@dimen/constarintLayoutMargin">
+    android:layout_marginStart="@dimen/constraintLayoutMargin"
+    android:layout_marginEnd="@dimen/constraintLayoutMargin"
+    android:layout_marginTop="@dimen/constraintLayoutMargin">
 
     <ImageView
         android:id="@+id/weather_icon_iv"
