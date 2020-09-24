@@ -23,9 +23,8 @@
     />
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="200dp">
     <ScrollView
-        android:layout_marginTop="@dimen/mainPadding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -43,6 +42,17 @@
             android:layout_gravity="center"
             android:visibility="invisible"/>
     </FrameLayout>
+    <View
+        android:id="@+id/delimiter"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@color/colorDelimeter"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_items_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 

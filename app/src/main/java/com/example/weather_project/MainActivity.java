@@ -2,6 +2,8 @@ package com.example.weather_project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText city_fied_tv;
     private TextView show_JSON;
     private ProgressBar search_pb;
+    private RecyclerView forecast_rv;
+
+
     public class tryAsync extends AsyncTask<URL, Void, String>
     {
         @Override
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         search_pb = (ProgressBar) findViewById(R.id.pb_network);
+        initRecyclerView();
     }
 
     @Override
@@ -81,4 +88,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+    private void initRecyclerView()
+    {
+        forecast_rv = (RecyclerView) findViewById(R.id.list_items_rv);
+        forecast_rv.setLayoutManager(new LinearLayoutManager(this));
+    }
+
 }
