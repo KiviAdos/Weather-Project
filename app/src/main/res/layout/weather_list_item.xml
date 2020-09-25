@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorAccent"
+    android:background="@drawable/item_gradient"
     android:padding="16dp"
     android:layout_marginStart="@dimen/constraintLayoutMargin"
     android:layout_marginEnd="@dimen/constraintLayoutMargin"
