@@ -16,11 +16,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.weather_project.adapters.forecastRecyclerViewAdapter;
 import com.example.weather_project.pojo.WeatherPOJO;
 import com.example.weather_project.utils.NetworkUtils;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
 
 import static com.example.weather_project.utils.NetworkUtils.generateURL;
 
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView sunrise_content_tv;
     private TextView sunset_content_tv;
     private TextView wind_speed_content_tv;
+    private forecastRecyclerViewAdapter forecastAdapter;
 
 
     public class tryAsync extends AsyncTask<URL, Void, String>
@@ -88,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         sunset_content_tv = (TextView) findViewById(R.id.sunset_content_id);
         wind_speed_content_tv = (TextView) findViewById(R.id.wind_speed_content_id);
         loadWeatherInfo();
+        loadItems();
     }
 
     @Override
@@ -110,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
     {
         forecast_rv = (RecyclerView) findViewById(R.id.list_items_rv);
         forecast_rv.setLayoutManager(new LinearLayoutManager(this));
+        forecastAdapter = new forecastRecyclerViewAdapter();
+        forecast_rv.setAdapter(forecastAdapter);
     }
     private void displayWeatherInfo(WeatherPOJO weather)
     {
@@ -134,8 +141,32 @@ public class MainActivity extends AppCompatActivity {
     private WeatherPOJO getWeather()
     {
         return new WeatherPOJO("0°C", "100°C","50°C", "20", "10",
-                "40°C", "15.08.2001", "07:00", "21:00", "42");
+                "40°C", "15.08.2001", "07:00", "21:00", "42", "Sunny");
     }
+    private void loadItems()
+    {
+        Collection<WeatherPOJO> weatherPOJOS = getWeatherInfo();
+        forecastAdapter.setItems(weatherPOJOS);
+    }
+    private Collection<WeatherPOJO> getWeatherInfo()
+    {
+        return Arrays.asList(
+                new WeatherPOJO("0°C", "100°C","50°C", "20", "10",
+                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Sunny"),
+                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
+                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Windy"),
+                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
+                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Rainy"),
+                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
+                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Cloudy"),
+                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
+                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Snowy"),
+                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
+                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Foggy"));
+
+
+    }
+
 
 
 }

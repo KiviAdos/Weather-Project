@@ -1,5 +1,7 @@
 package com.example.weather_project.pojo;
 
+import androidx.core.view.accessibility.AccessibilityViewCommand;
+
 import java.util.Objects;
 
 public class WeatherPOJO {
@@ -13,9 +15,10 @@ public class WeatherPOJO {
     private String sunrise_str;
     private String sunset_str;
     private String wind_speed_str;
+    private String weather_desc_str;
 
     public WeatherPOJO(String min_temp_str, String max_temp_str, String feels_like_str, String pressure_str, String humidity_str,
-                       String main_temp_str, String date_str, String sunrise_str, String sunset_str, String wind_speed_str) {
+                       String main_temp_str, String date_str, String sunrise_str, String sunset_str, String wind_speed_str, String weather_desc_str) {
         this.min_temp_str = min_temp_str;
         this.max_temp_str = max_temp_str;
         this.feels_like_str = feels_like_str;
@@ -26,6 +29,7 @@ public class WeatherPOJO {
         this.sunrise_str = sunrise_str;
         this.sunset_str = sunset_str;
         this.wind_speed_str = wind_speed_str;
+        this.weather_desc_str = weather_desc_str;
     }
 
     public String getMin_temp_str() {
@@ -68,6 +72,8 @@ public class WeatherPOJO {
         return wind_speed_str;
     }
 
+    public String getWeather_desc_str() { return weather_desc_str; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,11 +88,12 @@ public class WeatherPOJO {
                 date_str.equals(weatherPOJO.date_str) &&
                 sunrise_str.equals(weatherPOJO.sunrise_str) &&
                 sunset_str.equals(weatherPOJO.sunset_str) &&
-                wind_speed_str.equals(weatherPOJO.wind_speed_str);
+                wind_speed_str.equals(weatherPOJO.wind_speed_str) &&
+                weather_desc_str.equals(weatherPOJO.weather_desc_str);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(min_temp_str, max_temp_str, feels_like_str, pressure_str, humidity_str, main_temp_str, date_str, sunrise_str, sunset_str, wind_speed_str);
+        return Objects.hash(min_temp_str, max_temp_str, feels_like_str, pressure_str, humidity_str, main_temp_str, date_str, sunrise_str, sunset_str, wind_speed_str, weather_desc_str);
     }
 }
