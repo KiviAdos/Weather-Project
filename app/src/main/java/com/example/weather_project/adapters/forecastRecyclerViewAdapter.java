@@ -23,18 +23,36 @@ import java.util.Locale;
 public class forecastRecyclerViewAdapter extends RecyclerView.Adapter<forecastRecyclerViewAdapter.forecastViewHolder> {
     private List<WeatherPOJO> forecastList = new ArrayList<>();
     private static final String DATE_FORMAT = "MM.dd.YY";
+    private OnDayClickListener onDayClickListener;
+
+    public forecastRecyclerViewAdapter(OnDayClickListener onDayClickListener)
+    {
+        this.onDayClickListener = onDayClickListener;
+    }
+
+    public interface  OnDayClickListener{
+        void onDayClick(WeatherPOJO weather);
+    }
+
 
     class forecastViewHolder extends RecyclerView.ViewHolder{
         private TextView item_desc_tv;
         private TextView item_temp_tv;
         private TextView item_date_tv;
+
         forecastViewHolder(View itemView)
         {
             super(itemView);
             item_desc_tv = itemView.findViewById(R.id.list_item_weather_desc_tv);
             item_temp_tv = itemView.findViewById(R.id.list_item_temperature_tv);
             item_date_tv = itemView.findViewById(R.id.list_item_date_tv);
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WeatherPOJO weather = forecastList.get(getLayoutPosition());
+                    onDayClickListener.onDayClick(weather);
+                }
+            });
         }
 
 

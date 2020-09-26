@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.weather_project.adapters.forecastRecyclerViewAdapter;
 import com.example.weather_project.pojo.WeatherPOJO;
@@ -113,9 +115,15 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initRecyclerView()
     {
+        forecastRecyclerViewAdapter.OnDayClickListener onDayClickListener = new forecastRecyclerViewAdapter.OnDayClickListener() {
+            @Override
+            public void onDayClick(WeatherPOJO weather) {
+                Toast.makeText(MainActivity.this, "weather" + weather.getWeather_desc_str(), Toast.LENGTH_LONG).show();
+            }
+        };
         forecast_rv = (RecyclerView) findViewById(R.id.list_items_rv);
         forecast_rv.setLayoutManager(new LinearLayoutManager(this));
-        forecastAdapter = new forecastRecyclerViewAdapter();
+        forecastAdapter = new forecastRecyclerViewAdapter(onDayClickListener);
         forecast_rv.setAdapter(forecastAdapter);
     }
     private void displayWeatherInfo(WeatherPOJO weather)
