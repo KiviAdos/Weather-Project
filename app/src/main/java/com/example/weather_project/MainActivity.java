@@ -22,10 +22,16 @@ import com.example.weather_project.adapters.forecastRecyclerViewAdapter;
 import com.example.weather_project.pojo.WeatherPOJO;
 import com.example.weather_project.utils.NetworkUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import static com.example.weather_project.utils.NetworkUtils.generateURL;
 
@@ -45,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView sunset_content_tv;
     private TextView wind_speed_content_tv;
     private forecastRecyclerViewAdapter forecastAdapter;
+    private TextView test_tv;
 
 
     public class tryAsync extends AsyncTask<URL, Void, String>
@@ -61,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             String openWeatherres = null;
             try {
                 openWeatherres = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -69,8 +77,48 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+            String temp_min = null;
+            String temp_max = null;
+            String pressure = null;
+            String humidity = null;
+            String temp_main = null;
+            String date = null;
+            String feels_like = null;
+            String sunrise = null;
+            String sunset = null;
+            String wind_speed = null;
+            try {
+                JSONObject jsonResponse = new JSONObject(s);
+                JSONArray listArray = jsonResponse.getJSONArray("list");
+                JSONObject listInfo = listArray.getJSONObject(0);
+                JSONObject mainInfo = listInfo.getJSONObject("main");
+                temp_min = mainInfo.getString("temp_min") + "°C";
+                temp_max = mainInfo.getString("temp_max") + "°C";
+                pressure = mainInfo.getString("pressure");
+                humidity = mainInfo.getString("humidity");
+                feels_like = mainInfo.getString("feels_like");
+                temp_main = mainInfo.getString("temp") + "°C";
+                JSONObject windInfo = listInfo.getJSONObject("wind");
+                wind_speed = windInfo.getString("speed");
+                date = listInfo.getString("dt_txt");
+                JSONObject cityInfo = jsonResponse.getJSONObject("city");
+                sunrise = cityInfo.getString("sunrise");
+                sunset = cityInfo.getString("sunset");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             if(s!= null && !s.equals("")){
                 search_pb.setVisibility(View.INVISIBLE);
+                min_temp_content_tv.setText(temp_min);
+                max_temp_content_tv.setText(temp_max);
+                pressure_content_tv.setText(pressure);
+                humidity_content_tv.setText(humidity);
+                feels_like_content_tv.setText(feels_like);
+                main_temp_tv.setText(temp_main);
+                wind_speed_content_tv.setText(wind_speed);
+                main_date_tv.setText(date);
+                sunrise_content_tv.setText(sunrise);
+                sunset_content_tv.setText(sunset);
             }
 
         }
@@ -109,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
         if(menuItemSelected == R.id.search_button){
             city_fied_tv = findViewById(R.id.et_city_field);
             URL url = generateURL(city_fied_tv.getText().toString());
+            test_tv = findViewById(R.id.test_tv);
+            test_tv.setText(url.toString());
             new tryAsync().execute(url);
         }
         return true;
@@ -148,8 +198,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private WeatherPOJO getWeather()
     {
-        return new WeatherPOJO("0°C", "100°C","50°C", "20", "10",
-                "40°C", "15.08.2001", "07:00", "21:00", "42", "Sunny");
+        return new WeatherPOJO("0°C", "0°C","0°C", "0", "0",
+                "0°C", "00.00.00", "00:00", "00:00", "0", "Sunny");
     }
     private void loadItems()
     {

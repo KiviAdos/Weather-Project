@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="mainPadding">16dp</dimen>
+    <dimen name="tvPadding">8dp</dimen>
     <dimen name="weatherDescTextSize">35sp</dimen>
     <dimen name="listItemWidthHeight">70dp</dimen>
     <dimen name="dataTextSize">20sp</dimen>
