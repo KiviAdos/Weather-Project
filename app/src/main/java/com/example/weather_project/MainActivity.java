@@ -28,10 +28,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import static com.example.weather_project.utils.NetworkUtils.generateURL;
 
@@ -88,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
             String sunset = null;
             String wind_speed = null;
             try {
+                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                SimpleDateFormat oldDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 JSONObject jsonResponse = new JSONObject(s);
                 JSONArray listArray = jsonResponse.getJSONArray("list");
                 JSONObject listInfo = listArray.getJSONObject(0);
@@ -100,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
                 temp_main = mainInfo.getString("temp") + "°C";
                 JSONObject windInfo = listInfo.getJSONObject("wind");
                 wind_speed = windInfo.getString("speed");
-                date = listInfo.getString("dt_txt");
+                date = dateFormat.format(Objects.requireNonNull(oldDateFormat.parse(listInfo.getString("dt_txt"))));
                 JSONObject cityInfo = jsonResponse.getJSONObject("city");
-                sunrise = cityInfo.getString("sunrise");
-                sunset = cityInfo.getString("sunset");
-            } catch (JSONException e) {
+                sunrise = timeFormat.format(new Date(cityInfo.getInt("sunrise")*1000).getTime());
+                sunset = timeFormat.format(new Date(cityInfo.getInt("sunset")*1000).getTime());
+            } catch (JSONException | ParseException e) {
                 e.printStackTrace();
             }
             if(s!= null && !s.equals("")){
