@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             String sunrise = null;
             String sunset = null;
             String wind_speed = null;
+            String weather_description = null;
             try {
                 SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
@@ -98,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject jsonResponse = new JSONObject(s);
                 JSONArray listArray = jsonResponse.getJSONArray("list");
                 JSONObject listInfo = listArray.getJSONObject(0);
+                JSONArray weatherInfoArray = listArray.getJSONArray(1);
+                JSONObject weatherInfoObject = weatherInfoArray.getJSONObject(0);
+                weather_description = weatherInfoObject.getString("description");
                 JSONObject mainInfo = listInfo.getJSONObject("main");
                 temp_min = mainInfo.getString("temp_min") + "°C";
                 temp_max = mainInfo.getString("temp_max") + "°C";
