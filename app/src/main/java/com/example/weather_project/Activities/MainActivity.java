@@ -1,4 +1,4 @@
-package com.example.weather_project;
+package com.example.weather_project.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.weather_project.R;
 import com.example.weather_project.adapters.forecastRecyclerViewAdapter;
 import com.example.weather_project.pojo.WeatherPOJO;
+import com.example.weather_project.utils.JSONParser;
 import com.example.weather_project.utils.NetworkUtils;
 
 import org.json.JSONArray;
@@ -28,7 +29,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView wind_speed_content_tv;
     private forecastRecyclerViewAdapter forecastAdapter;
     private TextView test_tv;
+    private JSONParser parser;
 
 
     public class tryAsync extends AsyncTask<URL, Void, String>
@@ -81,55 +82,24 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            String temp_min = null;
-            String temp_max = null;
-            String pressure = null;
-            String humidity = null;
-            String temp_main = null;
-            String date = null;
-            String feels_like = null;
-            String sunrise = null;
-            String sunset = null;
-            String wind_speed = null;
-            String weather_description = null;
+            parser = new JSONParser(s);
             try {
-                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-                SimpleDateFormat oldDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                JSONObject jsonResponse = new JSONObject(s);
-                JSONArray listArray = jsonResponse.getJSONArray("list");
-                JSONObject listInfo = listArray.getJSONObject(0);
-                JSONArray weatherInfoArray = listArray.getJSONArray(1);
-                JSONObject weatherInfoObject = weatherInfoArray.getJSONObject(0);
-                weather_description = weatherInfoObject.getString("description");
-                JSONObject mainInfo = listInfo.getJSONObject("main");
-                temp_min = mainInfo.getString("temp_min") + "°C";
-                temp_max = mainInfo.getString("temp_max") + "°C";
-                pressure = mainInfo.getString("pressure");
-                humidity = mainInfo.getString("humidity");
-                feels_like = mainInfo.getString("feels_like");
-                temp_main = mainInfo.getString("temp") + "°C";
-                JSONObject windInfo = listInfo.getJSONObject("wind");
-                wind_speed = windInfo.getString("speed");
-                date = dateFormat.format(Objects.requireNonNull(oldDateFormat.parse(listInfo.getString("dt_txt"))));
-                JSONObject cityInfo = jsonResponse.getJSONObject("city");
-                sunrise = timeFormat.format(new Date(cityInfo.getInt("sunrise")*1000).getTime());
-                sunset = timeFormat.format(new Date(cityInfo.getInt("sunset")*1000).getTime());
+                parser.parseJSON();
             } catch (JSONException | ParseException e) {
                 e.printStackTrace();
             }
             if(s!= null && !s.equals("")){
                 search_pb.setVisibility(View.INVISIBLE);
-                min_temp_content_tv.setText(temp_min);
-                max_temp_content_tv.setText(temp_max);
-                pressure_content_tv.setText(pressure);
-                humidity_content_tv.setText(humidity);
-                feels_like_content_tv.setText(feels_like);
-                main_temp_tv.setText(temp_main);
-                wind_speed_content_tv.setText(wind_speed);
-                main_date_tv.setText(date);
-                sunrise_content_tv.setText(sunrise);
-                sunset_content_tv.setText(sunset);
+                min_temp_content_tv.setText(parser.getMain_temp_min());
+                max_temp_content_tv.setText(parser.getMain_temp_max());
+                pressure_content_tv.setText(parser.getMain_pressure());
+                humidity_content_tv.setText(parser.getMain_humidity());
+                feels_like_content_tv.setText(parser.getMain_feels_like());
+                main_temp_tv.setText(parser.getMain_temp());
+                wind_speed_content_tv.setText(parser.getWind_speed());
+                main_date_tv.setText(parser.getDt_txt());
+                sunrise_content_tv.setText(parser.getCity_sunrise());
+                sunset_content_tv.setText(parser.getCity_sunset());
             }
 
         }
@@ -142,16 +112,16 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
         search_pb = findViewById(R.id.pb_network);
 
-        min_temp_content_tv = (TextView) findViewById(R.id.min_temp_content_id);
-        max_temp_content_tv = (TextView) findViewById(R.id.max_temp_content_id);
-        feels_like_content_tv = (TextView) findViewById(R.id.feels_like_content_id);
-        pressure_content_tv = (TextView) findViewById(R.id.pressure_content_id);
-        humidity_content_tv = (TextView) findViewById(R.id.humidity_content_id);
-        main_temp_tv = (TextView) findViewById(R.id.main_temp_id);
-        main_date_tv = (TextView) findViewById(R.id.main_date_id);
-        sunrise_content_tv = (TextView) findViewById(R.id.sunrise_content_id);
-        sunset_content_tv = (TextView) findViewById(R.id.sunset_content_id);
-        wind_speed_content_tv = (TextView) findViewById(R.id.wind_speed_content_id);
+        min_temp_content_tv = findViewById(R.id.min_temp_content_id);
+        max_temp_content_tv = findViewById(R.id.max_temp_content_id);
+        feels_like_content_tv = findViewById(R.id.feels_like_content_id);
+        pressure_content_tv = findViewById(R.id.pressure_content_id);
+        humidity_content_tv = findViewById(R.id.humidity_content_id);
+        main_temp_tv = findViewById(R.id.main_temp_id);
+        main_date_tv = findViewById(R.id.main_date_id);
+        sunrise_content_tv = findViewById(R.id.sunrise_content_id);
+        sunset_content_tv = findViewById(R.id.sunset_content_id);
+        wind_speed_content_tv = findViewById(R.id.wind_speed_content_id);
         loadWeatherInfo();
         loadItems();
     }
@@ -182,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "weather" + weather.getWeather_desc_str(), Toast.LENGTH_LONG).show();
             }
         };
-        forecast_rv = (RecyclerView) findViewById(R.id.list_items_rv);
+        forecast_rv = findViewById(R.id.list_items_rv);
         forecast_rv.setLayoutManager(new LinearLayoutManager(this));
         forecastAdapter = new forecastRecyclerViewAdapter(onDayClickListener);
         forecast_rv.setAdapter(forecastAdapter);
