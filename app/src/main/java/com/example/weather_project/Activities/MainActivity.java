@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if(s!= null && !s.equals("")){
                 search_pb.setVisibility(View.INVISIBLE);
+                parser.JSONLog();
                 min_temp_content_tv.setText(parser.getMain_temp_min());
                 max_temp_content_tv.setText(parser.getMain_temp_max());
                 pressure_content_tv.setText(parser.getMain_pressure());

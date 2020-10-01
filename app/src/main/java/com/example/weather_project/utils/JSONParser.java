@@ -1,5 +1,7 @@
 package com.example.weather_project.utils;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,7 +81,7 @@ public class JSONParser {
         weather_main = weatherInfoObject.getString("main");
         weather_description = weatherInfoObject.getString("description");
         weather_icon = weatherInfoObject.getString("icon");
-        JSONObject cloudsInfo = weatherInfoObject.getJSONObject("clouds");
+        JSONObject cloudsInfo = listInfo.getJSONObject("clouds");
         clouds_all = cloudsInfo.getString("all");
         JSONObject windInfo = listInfo.getJSONObject("wind");
         wind_speed = windInfo.getString("speed");
@@ -101,6 +103,16 @@ public class JSONParser {
         city_sunrise = timeFormat.format(new Date(cityInfo.getInt("sunrise") * 1000).getTime());
         city_sunset = timeFormat.format(new Date(cityInfo.getInt("sunset") * 1000).getTime());
     }
+
+    public void JSONLog()
+    {
+        Log.i("JSON", cod + " " + message + " " + cnt + " " + list_dt + " " + main_temp + " " + main_feels_like + " " + main_temp_min
+                + " " + main_temp_max + " " + main_pressure + " " + main_sea_level + " " + main_grnd_level + main_humidity + " " + main_temp_kf
+                + " " + weather_id + " " + weather_main + " " + weather_description + " " + weather_icon + " " + clouds_all + " " + wind_speed
+                + " " + wind_deg + " " + visibility + " " + pop + " " + sys_pod + " " + dt_txt + " " + city_id + " " + city_name + " " + coord_lat
+                + " " + coord_lon + " " + city_country + " " + city_population + " " + city_timezone + " " + city_sunrise + " " + city_sunset);
+    }
+
 
     public String getCod() {
         return cod;
