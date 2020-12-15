@@ -151,13 +151,27 @@ public class MainActivity extends AppCompatActivity {
         forecastRecyclerViewAdapter.OnDayClickListener onDayClickListener = new forecastRecyclerViewAdapter.OnDayClickListener() {
             @Override
             public void onDayClick(WeatherPOJO weather) {
-                Toast.makeText(MainActivity.this, "weather" + weather.getWeather_desc_str(), Toast.LENGTH_LONG).show();
+                setNewInfo(weather);
             }
         };
         forecast_rv = findViewById(R.id.list_items_rv);
         forecast_rv.setLayoutManager(new LinearLayoutManager(this));
         forecastAdapter = new forecastRecyclerViewAdapter(onDayClickListener);
         forecast_rv.setAdapter(forecastAdapter);
+    }
+    private void setNewInfo(WeatherPOJO weather)
+    {
+        pressure_content_tv.setText(weather.getPressure_str());
+        humidity_content_tv.setText(weather.getHumidity_str());
+        main_temp_tv.setText(weather.getMain_temp_str());
+        main_date_tv.setText(weather.getDate_str());
+        min_temp_content_tv.setText(weather.getMin_temp_str());
+        max_temp_content_tv.setText(weather.getMax_temp_str());
+        feels_like_content_tv.setText(weather.getFeels_like_str());
+        sunrise_content_tv.setText(weather.getSunrise_str());
+        sunset_content_tv.setText(weather.getSunset_str());
+        wind_speed_content_tv.setText(weather.getWind_speed_str());
+        parser.setImages(main_weather_iv,weather.getWeather_image_str());
     }
     private void displayWeatherInfo(WeatherPOJO weather)
     {
