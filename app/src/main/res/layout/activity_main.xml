@@ -12,13 +12,14 @@
         android:id="@+id/et_city_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_style"
         android:hint="@string/et_hint"
         android:padding="@dimen/mainPadding"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="260dp"
-        android:background="@color/colorMainWeatherElem"
+        android:background="@color/topBackground"
         android:padding="@dimen/mainPadding">
 
         <ImageView

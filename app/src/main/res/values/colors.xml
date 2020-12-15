@@ -8,6 +8,6 @@
     <color name="colorRecyclerView">#FFFF</color>
     <color name="gradientEnd">#EFC2BC</color>
     <color name="gradientStart">#FFDBA9</color>
-
-
+    <color name="searchBackground">#D9F0F5</color>
+    <color name="topBackground">#00BFFF</color>
 </resources>
