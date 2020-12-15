@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 main_date_tv.setText(parser.getPOJODate(0));
                 sunrise_content_tv.setText(parser.getPOJOSunrise(0));
                 sunset_content_tv.setText(parser.getPOJOSunset(0));
+                parser.setImages(main_weather_iv, parser.getPOJOWeather_icon(0));
                 loadItems();
             }
         }
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     private WeatherPOJO getWeather()
     {
         return new WeatherPOJO("0°C", "0°C","0°C", "0", "0",
-                "0°C", "00.00.00", "00:00", "00:00", "0", "Sunny");
+                "0°C", "00.00.00", "00:00", "00:00", "0", "Sunny", "01d");
     }
     private void loadItems()
     {

@@ -39,6 +39,7 @@ public class forecastRecyclerViewAdapter extends RecyclerView.Adapter<forecastRe
         private TextView item_desc_tv;
         private TextView item_temp_tv;
         private TextView item_date_tv;
+        private ImageView item_weather_iv;
 
         forecastViewHolder(View itemView)
         {
@@ -46,6 +47,7 @@ public class forecastRecyclerViewAdapter extends RecyclerView.Adapter<forecastRe
             item_desc_tv = itemView.findViewById(R.id.list_item_weather_desc_tv);
             item_temp_tv = itemView.findViewById(R.id.list_item_temperature_tv);
             item_date_tv = itemView.findViewById(R.id.list_item_date_tv);
+            item_weather_iv = itemView.findViewById(R.id.weather_icon_iv);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,6 +64,7 @@ public class forecastRecyclerViewAdapter extends RecyclerView.Adapter<forecastRe
             item_desc_tv.setText(weatherPOJO.getWeather_desc_str());
             item_temp_tv.setText(weatherPOJO.getMain_temp_str());
             item_date_tv.setText(weatherPOJO.getDate_str());
+            weatherPOJO.setImages(item_weather_iv);
         }
 
     }

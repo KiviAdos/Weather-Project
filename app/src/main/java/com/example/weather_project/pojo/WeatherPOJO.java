@@ -1,6 +1,10 @@
 package com.example.weather_project.pojo;
 
+import android.widget.ImageView;
+
 import androidx.core.view.accessibility.AccessibilityViewCommand;
+
+import com.example.weather_project.R;
 
 import java.util.Objects;
 
@@ -16,9 +20,10 @@ public class WeatherPOJO {
     private String sunset_str;
     private String wind_speed_str;
     private String weather_desc_str;
+    private String weather_image_str;
 
     public WeatherPOJO(String min_temp_str, String max_temp_str, String feels_like_str, String pressure_str, String humidity_str,
-                       String main_temp_str, String date_str, String sunrise_str, String sunset_str, String wind_speed_str, String weather_desc_str) {
+                       String main_temp_str, String date_str, String sunrise_str, String sunset_str, String wind_speed_str, String weather_desc_str, String weather_image_str) {
         this.min_temp_str = min_temp_str;
         this.max_temp_str = max_temp_str;
         this.feels_like_str = feels_like_str;
@@ -30,12 +35,73 @@ public class WeatherPOJO {
         this.sunset_str = sunset_str;
         this.wind_speed_str = wind_speed_str;
         this.weather_desc_str = weather_desc_str;
+        this.weather_image_str = weather_image_str;
     }
-
+    public void setImages(ImageView test) {
+        switch (weather_image_str) {
+            case ("01d"):
+                test.setImageResource(R.drawable.x01d);
+                break;
+            case ("02d"):
+                test.setImageResource(R.drawable.x02d);
+                break;
+            case ("03d"):
+                test.setImageResource(R.drawable.x03d);
+                break;
+            case ("04d"):
+                test.setImageResource(R.drawable.x04d);
+                break;
+            case ("09d"):
+                test.setImageResource(R.drawable.x09d);
+                break;
+            case ("10d"):
+                test.setImageResource(R.drawable.x10d);
+                break;
+            case ("11d"):
+                test.setImageResource(R.drawable.x11d);
+                break;
+            case ("13d"):
+                test.setImageResource(R.drawable.x13d);
+                break;
+            case ("50d"):
+                test.setImageResource(R.drawable.x50d);
+                break;
+            case ("01n"):
+                test.setImageResource(R.drawable.x01n);
+                break;
+            case ("02n"):
+                test.setImageResource(R.drawable.x02n);
+                break;
+            case ("03n"):
+                test.setImageResource(R.drawable.x03n);
+                break;
+            case ("04n"):
+                test.setImageResource(R.drawable.x04n);
+                break;
+            case ("09n"):
+                test.setImageResource(R.drawable.x09n);
+                break;
+            case ("10n"):
+                test.setImageResource(R.drawable.x10n);
+                break;
+            case ("11n"):
+                test.setImageResource(R.drawable.x11n);
+                break;
+            case ("13n"):
+                test.setImageResource(R.drawable.x13n);
+                break;
+            case ("50n"):
+                test.setImageResource(R.drawable.x50n);
+                break;
+        }
+    }
     public String getMin_temp_str() {
         return min_temp_str;
     }
 
+    public String getWeather_image_str() {
+        return weather_image_str;
+    }
     public String getMax_temp_str() {
         return max_temp_str;
     }
@@ -89,11 +155,12 @@ public class WeatherPOJO {
                 sunrise_str.equals(weatherPOJO.sunrise_str) &&
                 sunset_str.equals(weatherPOJO.sunset_str) &&
                 wind_speed_str.equals(weatherPOJO.wind_speed_str) &&
-                weather_desc_str.equals(weatherPOJO.weather_desc_str);
+                weather_desc_str.equals(weatherPOJO.weather_desc_str)&&
+                weather_image_str.equals(weatherPOJO.weather_image_str);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(min_temp_str, max_temp_str, feels_like_str, pressure_str, humidity_str, main_temp_str, date_str, sunrise_str, sunset_str, wind_speed_str, weather_desc_str);
+        return Objects.hash(min_temp_str, max_temp_str, feels_like_str, pressure_str, humidity_str, main_temp_str, date_str, sunrise_str, sunset_str, wind_speed_str, weather_desc_str, weather_image_str);
     }
 }

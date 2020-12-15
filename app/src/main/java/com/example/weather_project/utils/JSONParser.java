@@ -1,7 +1,9 @@
 package com.example.weather_project.utils;
 
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.example.weather_project.R;
 import com.example.weather_project.pojo.WeatherPOJO;
 
 import org.json.JSONArray;
@@ -110,7 +112,7 @@ public class JSONParser {
             city_sunrise = timeFormat.format(new Date(cityInfo.getInt("sunrise") * 1000).getTime());
             city_sunset = timeFormat.format(new Date(cityInfo.getInt("sunset") * 1000).getTime());
             weatherPOJOS.add(new WeatherPOJO(main_temp_min, main_temp_max, main_feels_like, main_pressure, main_humidity,
-                    main_temp, dt_txt, city_sunrise, city_sunset, wind_speed, weather_description));
+                    main_temp, dt_txt, city_sunrise, city_sunset, wind_speed, weather_description, weather_icon));
         }
     }
 
@@ -163,6 +165,10 @@ public class JSONParser {
     public String getPOJOWind_speed(int i )
     {
         return weatherPOJOS.get(i).getWind_speed_str();
+    }
+    public String getPOJOWeather_icon(int i )
+    {
+        return weatherPOJOS.get(i).getWeather_image_str();
     }
     public String getCod() {
         return cod;
@@ -293,5 +299,46 @@ public class JSONParser {
 
     public String getCity_sunset() {
         return city_sunset;
+    }
+    public void setImages(ImageView test, String icon)
+    {
+        switch(icon) {
+            case ("01d"): test.setImageResource(R.drawable.x01d);
+                break;
+            case ("02d"): test.setImageResource(R.drawable.x02d);
+                break;
+            case ("03d"): test.setImageResource(R.drawable.x03d);
+                break;
+            case ("04d"): test.setImageResource(R.drawable.x04d);
+                break;
+            case ("09d"): test.setImageResource(R.drawable.x09d);
+                break;
+            case ("10d"): test.setImageResource(R.drawable.x10d);
+                break;
+            case ("11d"): test.setImageResource(R.drawable.x11d);
+                break;
+            case ("13d"): test.setImageResource(R.drawable.x13d);
+                break;
+            case ("50d"): test.setImageResource(R.drawable.x50d);
+                break;
+            case ("01n"): test.setImageResource(R.drawable.x01n);
+                break;
+            case ("02n"): test.setImageResource(R.drawable.x02n);
+                break;
+            case ("03n"): test.setImageResource(R.drawable.x03n);
+                break;
+            case ("04n"): test.setImageResource(R.drawable.x04n);
+                break;
+            case ("09n"): test.setImageResource(R.drawable.x09n);
+                break;
+            case ("10n"): test.setImageResource(R.drawable.x10n);
+                break;
+            case ("11n"): test.setImageResource(R.drawable.x11n);
+                break;
+            case ("13n"): test.setImageResource(R.drawable.x13n);
+                break;
+            case ("50n"): test.setImageResource(R.drawable.x50n);
+                break;
+        }
     }
 }
