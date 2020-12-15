@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -91,18 +92,18 @@ public class MainActivity extends AppCompatActivity {
             if(s!= null && !s.equals("")){
                 search_pb.setVisibility(View.INVISIBLE);
                 parser.JSONLog();
-                min_temp_content_tv.setText(parser.getMain_temp_min());
-                max_temp_content_tv.setText(parser.getMain_temp_max());
-                pressure_content_tv.setText(parser.getMain_pressure());
-                humidity_content_tv.setText(parser.getMain_humidity());
-                feels_like_content_tv.setText(parser.getMain_feels_like());
-                main_temp_tv.setText(parser.getMain_temp());
-                wind_speed_content_tv.setText(parser.getWind_speed());
-                main_date_tv.setText(parser.getDt_txt());
-                sunrise_content_tv.setText(parser.getCity_sunrise());
-                sunset_content_tv.setText(parser.getCity_sunset());
+                min_temp_content_tv.setText(parser.getPOJOTemp_min(0));
+                max_temp_content_tv.setText(parser.getPOJOTemp_max(0));
+                pressure_content_tv.setText(parser.getPOJOPressure(0));
+                humidity_content_tv.setText(parser.getPOJOHumidity(0));
+                feels_like_content_tv.setText(parser.getPOJOFeels_like(0));
+                main_temp_tv.setText(parser.getPOJOTemp(0));
+                wind_speed_content_tv.setText(parser.getPOJOWind_speed(0));
+                main_date_tv.setText(parser.getPOJODate(0));
+                sunrise_content_tv.setText(parser.getPOJOSunrise(0));
+                sunset_content_tv.setText(parser.getPOJOSunset(0));
+                loadItems();
             }
-
         }
     }
     @Override
@@ -123,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
         sunrise_content_tv = findViewById(R.id.sunrise_content_id);
         sunset_content_tv = findViewById(R.id.sunset_content_id);
         wind_speed_content_tv = findViewById(R.id.wind_speed_content_id);
+        main_weather_iv = findViewById(R.id.main_image_view);
         loadWeatherInfo();
-        loadItems();
     }
 
     @Override
@@ -139,8 +140,7 @@ public class MainActivity extends AppCompatActivity {
         if(menuItemSelected == R.id.search_button){
             city_fied_tv = findViewById(R.id.et_city_field);
             URL url = generateURL(city_fied_tv.getText().toString());
-            test_tv = findViewById(R.id.test_tv);
-            test_tv.setText(url.toString());
+            Log.e("TEST", url.toString());
             new tryAsync().execute(url);
         }
         return true;
@@ -185,26 +185,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void loadItems()
     {
-        Collection<WeatherPOJO> weatherPOJOS = getWeatherInfo();
-        forecastAdapter.setItems(weatherPOJOS);
-    }
-    private Collection<WeatherPOJO> getWeatherInfo()
-    {
-        return Arrays.asList(
-                new WeatherPOJO("0°C", "100°C","50°C", "20", "10",
-                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Sunny"),
-                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
-                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Windy"),
-                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
-                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Rainy"),
-                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
-                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Cloudy"),
-                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
-                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Snowy"),
-                new WeatherPOJO("0°C", "50°C","50°C", "20", "10",
-                        "40°C", "15.08.2001", "07:00", "21:00", "42", "Foggy"));
-
-
+        forecastAdapter.clearItems();
+        forecastAdapter.setItems(parser.weatherPOJOS);
     }
 
 

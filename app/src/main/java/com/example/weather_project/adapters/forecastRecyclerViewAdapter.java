@@ -22,7 +22,7 @@ import java.util.Locale;
 
 public class forecastRecyclerViewAdapter extends RecyclerView.Adapter<forecastRecyclerViewAdapter.forecastViewHolder> {
     private List<WeatherPOJO> forecastList = new ArrayList<>();
-    private static final String DATE_FORMAT = "MM.dd.YY";
+    private static final String DATE_FORMAT = "dd.MM.YY";
     private OnDayClickListener onDayClickListener;
 
     public forecastRecyclerViewAdapter(OnDayClickListener onDayClickListener)
@@ -61,19 +61,9 @@ public class forecastRecyclerViewAdapter extends RecyclerView.Adapter<forecastRe
         public void bind(WeatherPOJO weatherPOJO) {
             item_desc_tv.setText(weatherPOJO.getWeather_desc_str());
             item_temp_tv.setText(weatherPOJO.getMain_temp_str());
-            String creation_data_formatted = getFormattedDate(weatherPOJO.getDate_str());
-            item_date_tv.setText(creation_data_formatted);
+            item_date_tv.setText(weatherPOJO.getDate_str());
         }
-        private String getFormattedDate (String rawDate)
-        {
-            SimpleDateFormat displayFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-            try{
-                Date date = displayFormat.parse(rawDate);
-                return displayFormat.format(date);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
     }
     public void setItems(Collection<WeatherPOJO> weatherPOJOS)
     {

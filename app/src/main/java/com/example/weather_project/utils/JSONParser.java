@@ -2,12 +2,17 @@ package com.example.weather_project.utils;
 
 import android.util.Log;
 
+import com.example.weather_project.pojo.WeatherPOJO;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -47,7 +52,7 @@ public class JSONParser {
     private String city_timezone = null;
     private String city_sunrise = null;
     private String city_sunset = null;
-
+    public ArrayList<WeatherPOJO> weatherPOJOS = new ArrayList<>();
 
 
     public JSONParser(String url) {
@@ -55,53 +60,58 @@ public class JSONParser {
     }
 
     public void parseJSON() throws JSONException, ParseException {
+        weatherPOJOS.clear();
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.US);
         SimpleDateFormat oldDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         JSONObject jsonResponse = new JSONObject(url);
         cod = jsonResponse.getString("cod");
         message = jsonResponse.getString("message");
         cnt = jsonResponse.getString("cnt");
         JSONArray listArray = jsonResponse.getJSONArray("list");
-        JSONObject listInfo = listArray.getJSONObject(0);
-        list_dt = listInfo.getString("dt");
-        JSONArray weatherInfoArray = listInfo.getJSONArray("weather");
-        JSONObject weatherInfoObject = weatherInfoArray.getJSONObject(0);
-        JSONObject mainInfo = listInfo.getJSONObject("main");
-        main_temp = mainInfo.getString("temp") + "°C";
-        main_feels_like = mainInfo.getString("feels_like") + "°C";
-        main_temp_min = mainInfo.getString("temp_min") + "°C";
-        main_temp_max = mainInfo.getString("temp_max") + "°C";
-        main_pressure = mainInfo.getString("pressure");
-        main_sea_level = mainInfo.getString("sea_level");
-        main_grnd_level = mainInfo.getString("grnd_level");
-        main_humidity = mainInfo.getString("humidity");
-        main_temp_kf = mainInfo.getString("temp_kf");
-        weather_id = weatherInfoObject.getString("id");
-        weather_main = weatherInfoObject.getString("main");
-        weather_description = weatherInfoObject.getString("description");
-        weather_icon = weatherInfoObject.getString("icon");
-        JSONObject cloudsInfo = listInfo.getJSONObject("clouds");
-        clouds_all = cloudsInfo.getString("all");
-        JSONObject windInfo = listInfo.getJSONObject("wind");
-        wind_speed = windInfo.getString("speed");
-        wind_deg = windInfo.getString("deg");
-        visibility = listInfo.getString("visibility");
-        pop = listInfo.getString("pop");
-        JSONObject sysInfo = listInfo.getJSONObject("sys");
-        sys_pod = sysInfo.getString("pod");
-        dt_txt = dateFormat.format(Objects.requireNonNull(oldDateFormat.parse(listInfo.getString("dt_txt"))));
-        JSONObject cityInfo = jsonResponse.getJSONObject("city");
-        city_id = cityInfo.getString("id");
-        city_name = cityInfo.getString("name");
-        JSONObject coordInfo = cityInfo.getJSONObject("coord");
-        coord_lat = coordInfo.getString("lat");
-        coord_lon = coordInfo.getString("lon");
-        city_country = cityInfo.getString("country");
-        city_population = cityInfo.getString("population");
-        city_timezone = cityInfo.getString("timezone");
-        city_sunrise = timeFormat.format(new Date(cityInfo.getInt("sunrise") * 1000).getTime());
-        city_sunset = timeFormat.format(new Date(cityInfo.getInt("sunset") * 1000).getTime());
+        for(int i = 0; i < 40; i+=8) {
+            JSONObject listInfo = listArray.getJSONObject(i);
+            list_dt = listInfo.getString("dt");
+            JSONArray weatherInfoArray = listInfo.getJSONArray("weather");
+            JSONObject weatherInfoObject = weatherInfoArray.getJSONObject(0);
+            JSONObject mainInfo = listInfo.getJSONObject("main");
+            main_temp = mainInfo.getString("temp") + "°C";
+            main_feels_like = mainInfo.getString("feels_like") + "°C";
+            main_temp_min = mainInfo.getString("temp_min") + "°C";
+            main_temp_max = mainInfo.getString("temp_max") + "°C";
+            main_pressure = mainInfo.getString("pressure");
+            main_sea_level = mainInfo.getString("sea_level");
+            main_grnd_level = mainInfo.getString("grnd_level");
+            main_humidity = mainInfo.getString("humidity");
+            main_temp_kf = mainInfo.getString("temp_kf");
+            weather_id = weatherInfoObject.getString("id");
+            weather_main = weatherInfoObject.getString("main");
+            weather_description = weatherInfoObject.getString("description");
+            weather_icon = weatherInfoObject.getString("icon");
+            JSONObject cloudsInfo = listInfo.getJSONObject("clouds");
+            clouds_all = cloudsInfo.getString("all");
+            JSONObject windInfo = listInfo.getJSONObject("wind");
+            wind_speed = windInfo.getString("speed");
+            wind_deg = windInfo.getString("deg");
+            visibility = listInfo.getString("visibility");
+            pop = listInfo.getString("pop");
+            JSONObject sysInfo = listInfo.getJSONObject("sys");
+            sys_pod = sysInfo.getString("pod");
+            dt_txt = dateFormat.format(Objects.requireNonNull(oldDateFormat.parse(listInfo.getString("dt_txt"))));
+            JSONObject cityInfo = jsonResponse.getJSONObject("city");
+            city_id = cityInfo.getString("id");
+            city_name = cityInfo.getString("name");
+            JSONObject coordInfo = cityInfo.getJSONObject("coord");
+            coord_lat = coordInfo.getString("lat");
+            coord_lon = coordInfo.getString("lon");
+            city_country = cityInfo.getString("country");
+            city_population = cityInfo.getString("population");
+            city_timezone = cityInfo.getString("timezone");
+            city_sunrise = timeFormat.format(new Date(cityInfo.getInt("sunrise") * 1000).getTime());
+            city_sunset = timeFormat.format(new Date(cityInfo.getInt("sunset") * 1000).getTime());
+            weatherPOJOS.add(new WeatherPOJO(main_temp_min, main_temp_max, main_feels_like, main_pressure, main_humidity,
+                    main_temp, dt_txt, city_sunrise, city_sunset, wind_speed, weather_description));
+        }
     }
 
     public void JSONLog()
@@ -114,6 +124,46 @@ public class JSONParser {
     }
 
 
+    public String getPOJODate(int i )
+    {
+        return weatherPOJOS.get(i).getDate_str();
+    }
+    public String getPOJOPressure(int i )
+    {
+        return weatherPOJOS.get(i).getPressure_str();
+    }
+    public String getPOJOHumidity(int i )
+    {
+        return weatherPOJOS.get(i).getHumidity_str();
+    }
+    public String getPOJOTemp(int i )
+    {
+        return weatherPOJOS.get(i).getMain_temp_str();
+    }
+    public String getPOJOTemp_min(int i )
+    {
+        return weatherPOJOS.get(i).getMin_temp_str();
+    }
+    public String getPOJOTemp_max(int i )
+    {
+        return weatherPOJOS.get(i).getMax_temp_str();
+    }
+    public String getPOJOFeels_like(int i )
+    {
+        return weatherPOJOS.get(i).getFeels_like_str();
+    }
+    public String getPOJOSunrise(int i )
+    {
+        return weatherPOJOS.get(i).getSunrise_str();
+    }
+    public String getPOJOSunset(int i )
+    {
+        return weatherPOJOS.get(i).getSunset_str();
+    }
+    public String getPOJOWind_speed(int i )
+    {
+        return weatherPOJOS.get(i).getWind_speed_str();
+    }
     public String getCod() {
         return cod;
     }

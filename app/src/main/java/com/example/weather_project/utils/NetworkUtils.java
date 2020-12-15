@@ -17,7 +17,7 @@ public class NetworkUtils {
     private static final String OW_API_PARAM_CNT = "cnt";
     private static final String OW_API_PARAM_UNITS = "units";
     private static final String OW_API_UNITS = "metric";
-    private static final String OW_API_CNT = "1";
+    private static final String OW_API_CNT = "40";
     private static final String OW_API_PARAM_APPID = "appid";
     private static final String OW_API_APPID = "131f0e7a6c3e5e477f646fbaf962ffa2";
     public static URL generateURL(String city_name){
